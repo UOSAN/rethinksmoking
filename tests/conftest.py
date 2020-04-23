@@ -6,6 +6,7 @@ from rethinksmoking.rethinkconfig import RethinkConfig
 
 @pytest.fixture
 def app():
+    """Session-wide test `Flask` application"""
     config = RethinkConfig(path=None)
 
     app = create_app(test_config={
