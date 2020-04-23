@@ -12,7 +12,6 @@ def create_app(test_config=None):
     if test_config is None:
         config = RethinkConfig(path=app.instance_path)
         app.config.from_mapping(RETHINKCONFIG=config)
-        app.config['SQLALCHEMY_DATABASE_URI'] = config.get_database_uri()
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
