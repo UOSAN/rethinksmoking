@@ -10,11 +10,14 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
 
     if test_config is None:
-        app.config.from_mapping(RETHINKCONFIG=RethinkConfig(path=app.instance_path))
+        config = RethinkConfig(path=app.instance_path)
+        app.config.from_mapping(RETHINKCONFIG=config)
+        app.config['SQLALCHEMY_DATABASE_URI'] = config.get_database_uri()
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
 
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.register_blueprint(bp)
 
     db.init_app(app)

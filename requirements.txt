@@ -1,2 +1,3 @@
 flask
 Flask-SQLAlchemy
+-r tests/requirements.txt
