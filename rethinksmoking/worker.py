@@ -2,6 +2,8 @@ from flask import (
     Blueprint, request, current_app, make_response
 )
 
+from .request_handler import RequestHandler
+
 bp = Blueprint('worker', __name__)
 
 
@@ -14,6 +16,8 @@ def add_worker_and_messages():
 
         try:
             current_app.logger.info(f'POST request as JSON:\n{request_output}\n')
+            handler = RequestHandler(request=request_output)
+            handler.handle_request()
         except KeyError as ke:
             current_app.logger.exception(str(ke))
     else:
