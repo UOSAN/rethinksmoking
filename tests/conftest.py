@@ -16,3 +16,9 @@ def app():
     })
 
     yield app
+
+
+@pytest.fixture()
+def client(app):
+    """Test `Flask` client"""
+    return app.test_client()
