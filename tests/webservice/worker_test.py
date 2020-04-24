@@ -7,7 +7,7 @@ def test_add_worker_and_messages_bad_request(app):
     with app.app_context():
         client = app.test_client()
         response = client.post('/worker/message', data='some garbage test data', content_type='application/text')
-        assert response.status == '400 BAD REQUEST'
+        assert response.status_code == HTTPStatus.BAD_REQUEST
 
 
 def test_add_worker_and_messages_incomplete_object(app):
