@@ -1,6 +1,6 @@
 from typing import Mapping, Union
 
-from .orm.mturk_worker import MturkWorker, add_worker
+from .orm.mturk_worker import MturkWorker
 
 
 class RequestHandler:
@@ -16,4 +16,4 @@ class RequestHandler:
                              ftnd_1=self._req.get('ftnd_1'), ftnd_2=self._req.get('ftnd_2'),
                              ftnd_3=self._req.get('ftnd_3'), ftnd_4=self._req.get('ftnd_4'),
                              ftnd_5=self._req.get('ftnd_5'), ftnd_6=self._req.get('ftnd_6'))
-        add_worker(worker)
+        worker.add()
