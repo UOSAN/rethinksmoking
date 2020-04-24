@@ -23,7 +23,6 @@ class MturkWorker(db.Model):
     def __repr__(self):
         return f'<MTurkWorker(id={self.id}, age={self.age}, gender={self.gender})>'
 
-
-def add_worker(worker: MturkWorker):
-    db.session.add(worker)
-    db.session.commit()
+    def add(self):
+        db.session.add(self)
+        db.session.commit()
