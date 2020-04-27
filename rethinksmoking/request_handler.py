@@ -1,5 +1,6 @@
 from typing import Mapping, Union
 
+from .orm.message import Message
 from .orm.mturk_worker import MturkWorker
 
 
@@ -16,4 +17,9 @@ class RequestHandler:
                              ftnd_1=self._req.get('ftnd_1'), ftnd_2=self._req.get('ftnd_2'),
                              ftnd_3=self._req.get('ftnd_3'), ftnd_4=self._req.get('ftnd_4'),
                              ftnd_5=self._req.get('ftnd_5'), ftnd_6=self._req.get('ftnd_6'))
+        messages = self._req.get('messages')
+        for m in messages or []:
+            message = Message(message_content=m.get('content'), condition=m.get('condition'))
+            worker.messages.append(message)
+
         worker.add()

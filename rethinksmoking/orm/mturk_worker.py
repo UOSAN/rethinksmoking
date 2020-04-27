@@ -20,6 +20,8 @@ class MturkWorker(db.Model):
     ftnd_5 = db.Column(db.Integer)  # Do you smoke more in the first hours after waking than during the rest of the day?
     ftnd_6 = db.Column(db.Integer)  # Do you smoke even when you are ill enough to be in bed most of the day?
 
+    messages = db.relationship('Message', back_populates='mturk_user')
+
     def __repr__(self):
         return f'<MTurkWorker(id={self.id}, age={self.age}, gender={self.gender})>'
 
