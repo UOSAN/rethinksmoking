@@ -7,7 +7,7 @@ class Message(db.Model):
     condition = db.Column(db.String, nullable=False)
 
     # Foreign key relationship with MturkWorker table
-    mturk_user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    mturk_user_id = db.Column(db.Integer, db.ForeignKey('mturk_worker.id'), nullable=False)
     mturk_user = db.relationship('MturkWorker', back_populates='messages')
 
     def __repr__(self):
