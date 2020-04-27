@@ -18,7 +18,7 @@ class RequestHandler:
                              ftnd_3=self._req.get('ftnd_3'), ftnd_4=self._req.get('ftnd_4'),
                              ftnd_5=self._req.get('ftnd_5'), ftnd_6=self._req.get('ftnd_6'))
         messages = self._req.get('messages')
-        for m in messages:
+        for m in messages or []:
             message = Message(message_content=m.get('content'), condition=m.get('condition'))
             worker.messages.append(message)
 
