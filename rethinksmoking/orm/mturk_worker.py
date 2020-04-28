@@ -48,6 +48,8 @@ class MturkWorker(db.Model):
 
     messages = db.relationship('Message', back_populates='mturk_user')
 
+    rating = db.relationship('Rating', back_populates='rater')
+
     def __repr__(self):
         return f'<MTurkWorker(id={self.id}, age={self.age}, gender={self.gender})>'
 

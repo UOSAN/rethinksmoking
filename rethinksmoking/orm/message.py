@@ -12,6 +12,8 @@ class Message(db.Model):
 
     scores = db.relationship('Score', back_populates='message')
 
+    ratings = db.relationship('Rating', back_populates='message')
+
     def __repr__(self):
         return f'<Message(content={self.message_content})>'
 
