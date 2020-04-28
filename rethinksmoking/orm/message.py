@@ -10,6 +10,8 @@ class Message(db.Model):
     mturk_user_id = db.Column(db.Integer, db.ForeignKey('mturk_worker.id'), nullable=False)
     mturk_user = db.relationship('MturkWorker', back_populates='messages')
 
+    scores = db.relationship('Score', back_populates='message')
+
     def __repr__(self):
         return f'<Message(content={self.message_content})>'
 
