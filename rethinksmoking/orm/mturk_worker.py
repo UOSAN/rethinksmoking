@@ -3,14 +3,20 @@ from .database import db
 
 class MturkWorker(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    # Demographics
     age = db.Column(db.Integer)
     gender = db.Column(db.String)
     race = db.Column(db.String)
     ethnicity = db.Column(db.String)
     english_primary_language = db.Column(db.Boolean)
+    english_acquisition_age = db.Column(db.Integer)
     education_level = db.Column(db.String)
     income = db.Column(db.String)
     household_size = db.Column(db.Integer)
+
+    # Engagement in survey
+    distracted_level = db.Column(db.Integer)
+    seriousness_level = db.Column(db.Integer)
 
     # Fagerström Test for Nicotine Dependence
     ftnd_1 = db.Column(db.Integer)  # How soon after you wake up do you smoke your first cigarette?
