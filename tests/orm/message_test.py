@@ -8,7 +8,7 @@ class TestMessage:
         expected_content = 'test content'
         expected_condition = 'test condition'
 
-        message = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1, scores=[])
+        message = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1)
         message.add()
 
         # Verify only message in database has correct content
@@ -22,10 +22,10 @@ class TestMessage:
         expected_content = 'test content'
         expected_condition = 'test condition'
 
-        message1 = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1, scores=[])
+        message1 = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1)
         message1.add()
 
-        message2 = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1, scores=[])
+        message2 = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1)
         message2.add()
 
         # Verify correct number of messages
