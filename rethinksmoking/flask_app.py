@@ -2,7 +2,7 @@ import os.path
 from flask import Flask
 
 from .orm.database import db
-from .worker import bp
+from .route import bp
 
 
 def create_app(test_config=None):

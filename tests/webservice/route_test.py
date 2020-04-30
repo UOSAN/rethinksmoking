@@ -2,7 +2,7 @@ from unittest import mock
 from http import HTTPStatus
 
 
-class TestAddWorker:
+class TestPostWorkerRoute:
     def test_bad_request(self, app):
         # Verify that 400 Bad Request is returned on a bad request
         with app.app_context():
