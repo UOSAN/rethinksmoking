@@ -2,7 +2,7 @@ from rethinksmoking.flask_app import create_app
 
 
 def test_create_app():
-    test_config = {'TESTING': True, 'SQLALCHEMY_DATABASE_URI': 'test_uri'}
+    test_config = {'TESTING': True, 'SQLALCHEMY_DATABASE_URI': 'sqlite:///:memory:'}
 
     app = create_app(test_config)
     assert app.testing
