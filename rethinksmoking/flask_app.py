@@ -1,7 +1,7 @@
+import os.path
 from flask import Flask
 
 from .orm.database import db
-from .rethinkconfig import RethinkConfig
 from .worker import bp
 
 
@@ -10,8 +10,13 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
 
     if test_config is None:
-        config = RethinkConfig(path=app.instance_path)
-        app.config.from_mapping(RETHINKCONFIG=config)
+        try:
+            app.config.from_pyfile('config.py')
+            path = os.path.join(app.instance_path, app.config['SQLALCHEMY_DATABASE_NAME'])
+        except IOError as e:
+            print(e)
+            path = ':memory:'
+        app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{path}'
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
