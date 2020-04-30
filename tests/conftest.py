@@ -3,7 +3,6 @@ import pytest
 import tempfile
 
 from rethinksmoking.flask_app import create_app
-from rethinksmoking.rethinkconfig import RethinkConfig
 from rethinksmoking.orm.database import db as _db
 
 TEST_DATABASE = 'rethinksmoking_test.db'
@@ -14,12 +13,9 @@ TEST_DATABASE_URI = 'sqlite:///' + TEST_DATABASE_PATH
 @pytest.fixture(scope='session')
 def app():
     """Session-wide test `Flask` application"""
-    config = RethinkConfig(path=None)
-
     app = create_app(test_config={
         'TESTING': True,
-        'SQLALCHEMY_DATABASE_URI': TEST_DATABASE_URI,
-        'RETHINKCONFIG': config
+        'SQLALCHEMY_DATABASE_URI': TEST_DATABASE_URI
     })
 
     yield app
