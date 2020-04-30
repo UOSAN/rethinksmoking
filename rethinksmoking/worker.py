@@ -3,6 +3,8 @@ from flask import (
 )
 
 from .request_handler import RequestHandler
+from .orm.rating import Rating
+from .orm.score import Score
 
 bp = Blueprint('worker', __name__)
 
@@ -26,3 +28,15 @@ def add_worker_and_messages():
 
     # return successfully
     return make_response('', 200)
+
+
+@bp.route('/score', methods=['GET'])
+def get_scores():
+    scores = Score.query.all()
+    return make_response(str(scores), 200)
+
+
+@bp.route('/rating', methods=['GET'])
+def get_ratings():
+    ratings = Rating.query.all()
+    return make_response(str(ratings), 200)
