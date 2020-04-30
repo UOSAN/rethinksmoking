@@ -9,8 +9,8 @@ from .orm.score import Score
 bp = Blueprint('worker', __name__)
 
 
-# Handle POST to the /worker/message endpoint that contains the required output
-@bp.route('/worker/message', methods=['POST'])
+# Handle POST to the /worker endpoint that contains the required output
+@bp.route('/worker', methods=['POST'])
 def add_worker_and_messages():
     if request.is_json:
         request_output = request.get_json()

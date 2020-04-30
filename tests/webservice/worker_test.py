@@ -7,7 +7,7 @@ class TestAddWorker:
         # Verify that 400 Bad Request is returned on a bad request
         with app.app_context():
             client = app.test_client()
-            response = client.post('/worker/message', data='some garbage test data', content_type='application/text')
+            response = client.post('/worker', data='some garbage test data', content_type='application/text')
             assert response.status_code == HTTPStatus.BAD_REQUEST
 
     def test_incomplete_object(self, app):
@@ -16,7 +16,7 @@ class TestAddWorker:
         with mock.patch('rethinksmoking.orm.mturk_worker.MturkWorker.add') as mock_add:
             with app.app_context():
                 client = app.test_client()
-                response = client.post('/worker/message', json=bad_worker, content_type='application/json')
+                response = client.post('/worker', json=bad_worker, content_type='application/json')
                 assert response.status_code == HTTPStatus.OK
 
     def test_success(self, app):
@@ -29,5 +29,5 @@ class TestAddWorker:
         with mock.patch('rethinksmoking.orm.mturk_worker.MturkWorker.add') as mock_add:
             with app.app_context():
                 client = app.test_client()
-                response = client.post('/worker/message', json=actual_worker, content_type='application/json')
+                response = client.post('/worker', json=actual_worker, content_type='application/json')
                 assert response.status_code == HTTPStatus.OK
