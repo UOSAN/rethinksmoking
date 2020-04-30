@@ -10,8 +10,12 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
 
     if test_config is None:
-        app.config.from_pyfile('config.py')
-        path = os.path.join(app.instance_path, app.config['SQLALCHEMY_DATABASE_NAME'])
+        try:
+            app.config.from_pyfile('config.py')
+            path = os.path.join(app.instance_path, app.config['SQLALCHEMY_DATABASE_NAME'])
+        except IOError as e:
+            print(e)
+            path = ':memory:'
         app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{path}'
     else:
         # load the test config if passed in
