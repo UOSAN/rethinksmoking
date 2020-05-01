@@ -25,7 +25,9 @@ def create_app(test_config=None):
     app.register_blueprint(bp)
 
     db.init_app(app)
-    return app
+    with app.app_context():
+        db.create_all()
+        return app
 
 
 flask_app = create_app()
