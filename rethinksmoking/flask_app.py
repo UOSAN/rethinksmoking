@@ -11,12 +11,16 @@ def create_app(test_config=None):
 
     if test_config is None:
         try:
-            app.config.from_pyfile('config.py')
-            path = os.path.join(app.instance_path, app.config['SQLALCHEMY_DATABASE_NAME'])
-        except IOError as e:
+            db_connection = os.environ['DB_CONNECTION']
+            db_host = os.environ['DB_HOST']
+            db_database = os.environ['DB_DATABASE']
+            db_user = os.environ['DB_USERNAME']
+            db_password = os.environ['DB_PASSWORD']
+            db_uri = f'{db_connection}://{db_user}:{db_password}@{db_host}/{db_database}'
+        except KeyError as e:
             print(e)
-            path = ':memory:'
-        app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{path}'
+            db_uri = 'sqlite:///:memory:'
+        app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     else:
         # load the test config if passed in
         app.config.from_mapping(test_config)
