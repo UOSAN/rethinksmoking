@@ -9,8 +9,8 @@ class RequestHandler:
         self._req = request
 
     def handle_request(self):
-        worker = MturkWorker(age=self._req.get('age'), gender=self._req.get('gender'), race=self._req.get('race'),
-                             ethnicity=self._req.get('ethnicity'),
+        worker = MturkWorker(age=self._req.get('age'), gender=self._req.get('gender'),
+                             is_hispanic=self._req.get('race'), ethnicity=self._req.get('ethnicity'),
                              english_primary_language=self._req.get('english_primary_language'),
                              education_level=self._req.get('education_level'), income=self._req.get('income'),
                              household_size=self._req.get('household_size'),
