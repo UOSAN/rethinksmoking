@@ -21,16 +21,30 @@ class IncomeLevel(Enum):
     DeclineToRespond = 7
 
 
+class EducationLevel(Enum):
+    NoSchooling = 1
+    HighSchoolNoDiploma = 2
+    HighSchoolDiploma = 3
+    GED = 4
+    LessThanOneYearCollege = 5
+    MoreThanOneYearCollege = 6
+    AssociatesDegree = 7
+    BachelorsDegree = 8
+    MastersDegree = 9
+    ProfessionalDegree = 10
+    DoctorateDegree = 11
+
+
 class MturkWorker(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # Demographics
     age = db.Column(db.Integer)
     gender = db.Column(db.Enum(Gender))
-    race = db.Column(db.String)
-    ethnicity = db.Column(db.String)
+    is_hispanic = db.Column(db.Boolean)
+    ethnicity = db.Column(db.String(300))
     english_primary_language = db.Column(db.Boolean)
     english_acquisition_age = db.Column(db.Integer)
-    education_level = db.Column(db.String)
+    education_level = db.Column(db.Enum(EducationLevel))
     income = db.Column(db.Enum(IncomeLevel))
     household_size = db.Column(db.Integer)
 

@@ -21,9 +21,9 @@ class TestPostWorkerRoute:
                 assert mock_add.called
 
     def test_success(self, app):
-        actual_worker = {'age': 10, 'gender': 'Female', 'race': 'Hispanic and/or Latinx', 'ethnicity': 'Unknown',
-                         'english_primary_language': True, 'education_level': 'No schooling completed',
-                         'income': '25000', 'household_size': 9, 'ftnd_1': 1, 'ftnd_2': 1, 'ftnd_3': 1, 'ftnd_4': 1,
+        actual_worker = {'age': 10, 'gender': 'Female', 'is_hispanic': False, 'ethnicity': 'Unknown',
+                         'english_primary_language': True, 'education_level': 'HighSchoolNoDiploma',
+                         'income': 'Below25', 'household_size': 9, 'ftnd_1': 1, 'ftnd_2': 1, 'ftnd_3': 1, 'ftnd_4': 1,
                          'ftnd_5': 1, 'ftnd_6': 1}
 
         # Verify 200 OK is returned when a complete object is received
