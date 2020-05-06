@@ -1,3 +1,5 @@
+import json
+
 from .database import db
 
 
@@ -15,8 +17,19 @@ class Message(db.Model):
     ratings = db.relationship('Rating', back_populates='message')
 
     def __repr__(self):
-        return f'<Message(content={self.message_content})>'
+        return json.dumps(self, cls=MessageEncoder)
 
     def add(self):
         db.session.add(self)
         db.session.commit()
+
+
+class MessageEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, Message):
+            return {
+                "id": o.id,
+                "message_content": o.message_content,
+                "condition": o.condition
+            }
+        return json.JSONEncoder.default(self, o)

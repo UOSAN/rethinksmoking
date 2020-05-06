@@ -1,3 +1,5 @@
+import json
+
 from .database import db
 
 
@@ -15,9 +17,20 @@ class Rating(db.Model):
     rater = db.relationship('MturkWorker', back_populates='rating')
 
     def __repr__(self):
-        return f'<Rating(helpfulness={self.helpfulness}, relatability={self.relatability}, ' \
-               f'familiarity={self.familiarity})>'
+        return json.dumps(self, cls=RatingEncoder)
 
     def add(self):
         db.session.add(self)
         db.session.commit()
+
+
+class RatingEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, Rating):
+            return {
+                "id": o.id,
+                "helpfulness": o.helpfulness,
+                "condition": o.relatability,
+                "familiarity": o.familiarity
+            }
+        return json.JSONEncoder.default(self, o)

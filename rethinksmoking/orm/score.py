@@ -1,3 +1,5 @@
+import json
+
 from .database import db
 
 
@@ -10,8 +12,21 @@ class Score(db.Model):
     message = db.relationship('Message', back_populates='scores')
 
     def __repr__(self):
-        return f'<Score(quality={self.quality}, scorer={self.scorer_id})>'
+        return json.dumps(self, cls=ScoreEncoder)
 
     def add(self):
         db.session.add(self)
         db.session.commit()
+
+
+class ScoreEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, Score):
+            return {
+                "id": o.id,
+                "quality": o.quality,
+                "scorer_id": o.scorer_id,
+                "message_id": o.message_id,
+                "message": o.message
+            }
+        return json.JSONEncoder.default(self, o)
