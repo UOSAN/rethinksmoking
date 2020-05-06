@@ -5,6 +5,7 @@ from flask import (
 from .request_handler import RequestHandler
 from .orm.rating import Rating
 from .orm.score import Score
+from .orm.message import Message
 from .orm.mturk_worker import MturkWorker
 
 bp = Blueprint('worker', __name__)
@@ -33,6 +34,12 @@ def add_worker_and_messages():
 
         # return successfully
         return make_response('', 200)
+
+
+@bp.route('/message', methods=['GET'])
+def get_messages():
+    messages = Message.query.all()
+    return make_response(str(messages), 200)
 
 
 @bp.route('/score', methods=['GET'])
