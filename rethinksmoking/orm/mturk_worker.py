@@ -1,3 +1,4 @@
+import json
 from enum import Enum
 
 from .database import db
@@ -10,6 +11,16 @@ class Gender(Enum):
     Nonbinary = 4
     Other = 5
 
+    def __str__(self):
+        gender_to_string = {
+            Gender.Male: 'Male',
+            Gender.Female: 'Female',
+            Gender.Transgender: 'Transgender',
+            Gender.Nonbinary: 'Nonbinary',
+            Gender.Other: 'Other'
+        }
+        return gender_to_string[self]
+
 
 class IncomeLevel(Enum):
     Below25 = 1
@@ -20,19 +31,50 @@ class IncomeLevel(Enum):
     Unknown = 6
     DeclineToRespond = 7
 
+    def __str__(self):
+        income_to_string = {
+            IncomeLevel.Below25: 'Up to $25,000',
+            IncomeLevel.Between25to40: '$25,000 - $40,000',
+            IncomeLevel.Between40to75: '$40,000 - $75,000',
+            IncomeLevel.Between75to100: '$75,000 - $100,000',
+            IncomeLevel.Over100: 'Over $100,000',
+            IncomeLevel.Unknown: 'Unknown',
+            IncomeLevel.DeclineToRespond: 'Decline to respond'
+        }
+        return income_to_string[self]
+
 
 class EducationLevel(Enum):
     NoSchooling = 1
-    HighSchoolNoDiploma = 2
-    HighSchoolDiploma = 3
-    GED = 4
-    LessThanOneYearCollege = 5
-    MoreThanOneYearCollege = 6
-    AssociatesDegree = 7
-    BachelorsDegree = 8
-    MastersDegree = 9
-    ProfessionalDegree = 10
-    DoctorateDegree = 11
+    Grades1Through11 = 2
+    HighSchoolNoDiploma = 3
+    HighSchoolDiploma = 4
+    GED = 5
+    LessThanOneYearCollege = 6
+    MoreThanOneYearCollege = 7
+    AssociatesDegree = 8
+    BachelorsDegree = 9
+    MastersDegree = 10
+    ProfessionalDegree = 11
+    DoctorateDegree = 12
+
+    def __str__(self):
+        education_to_string = {
+            EducationLevel.NoSchooling: 'No schooling completed',
+            EducationLevel.Grades1Through11: 'Grades 1 through 11',
+            EducationLevel.HighSchoolNoDiploma: '12th grade - no diploma',
+            EducationLevel.HighSchoolDiploma: 'Regular high school diploma',
+            EducationLevel.GED: 'GED or alternative credential',
+            EducationLevel.LessThanOneYearCollege: 'Some college credit, but less than 1 year of college',
+            EducationLevel.MoreThanOneYearCollege: '1 or more years of college credit, no degree',
+            EducationLevel.AssociatesDegree: 'Associates degree',
+            EducationLevel.BachelorsDegree: 'Bachelors degree',
+            EducationLevel.MastersDegree: 'Masters degree',
+            EducationLevel.ProfessionalDegree: 'Professional degree beyond bachelors degree',
+            EducationLevel.DoctorateDegree: 'Doctorate degree'
+        }
+
+        return education_to_string[self]
 
 
 class MturkWorker(db.Model):
@@ -65,8 +107,32 @@ class MturkWorker(db.Model):
     rating = db.relationship('Rating', back_populates='rater')
 
     def __repr__(self):
-        return f'<MTurkWorker(id={self.id}, age={self.age}, gender={self.gender})>'
+        return json.dumps(self, cls=MturkWorkerEncoder)
 
     def add(self):
         db.session.add(self)
         db.session.commit()
+
+
+class MturkWorkerEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, MturkWorker):
+            return {
+                "id": o.id,
+                "age": o.age,
+                "gender": str(o.gender),
+                "is_hispanic": o.is_hispanic,
+                "ethnicity": o.ethnicity,
+                "english_primary_language": o.english_primary_language,
+                "english_acquisition_age": o.english_acquisition_age,
+                "education_level": str(o.education_level),
+                "income": str(o.income),
+                "household_size": o.household_size,
+                "ftnd_1": o.ftnd_1,
+                "ftnd_2": o.ftnd_2,
+                "ftnd_3": o.ftnd_3,
+                "ftnd_4": o.ftnd_4,
+                "ftnd_5": o.ftnd_5,
+                "ftnd_6": o.ftnd_6
+            }
+        return json.JSONEncoder.default(self, o)
