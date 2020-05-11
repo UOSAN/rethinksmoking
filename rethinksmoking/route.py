@@ -1,3 +1,4 @@
+import sys
 from flask import (
     Blueprint, request, current_app, make_response
 )
@@ -15,19 +16,24 @@ bp = Blueprint('worker', __name__)
 @bp.route('/worker', methods=['GET', 'POST'])
 def add_worker_and_messages():
     if request.method == 'GET':
+        print(f'RS GET /worker')
+        sys.stdout.flush()
         workers = MturkWorker.query.all()
         return make_response(str(workers), 200)
     elif request.method == 'POST':
+        print(f'RS POST /worker')
+        sys.stdout.flush()
         if request.is_json:
             request_output = request.get_json()
-            current_app.logger.info(f'New POST received')
+            print(f'POST request as JSON:\n{request_output}\n')
+            sys.stdout.flush()
 
             try:
-                current_app.logger.info(f'POST request as JSON:\n{request_output}\n')
                 handler = RequestHandler(request=request_output)
                 handler.handle_request()
-            except KeyError as ke:
-                current_app.logger.exception(str(ke))
+            except (KeyError, TypeError, ValueError) as err:
+                print(err)
+                return make_response('', 400)
         else:
             current_app.logger.info(f'POST request:\n{request.data}\n')
             return make_response('', 400)

@@ -52,7 +52,7 @@ class EducationLevel(Enum):
     GED = 5
     LessThanOneYearCollege = 6
     MoreThanOneYearCollege = 7
-    AssociatesDegree = 8
+    AssociateDegree = 8
     BachelorsDegree = 9
     MastersDegree = 10
     ProfessionalDegree = 11
@@ -67,9 +67,9 @@ class EducationLevel(Enum):
             EducationLevel.GED: 'GED or alternative credential',
             EducationLevel.LessThanOneYearCollege: 'Some college credit, but less than 1 year of college',
             EducationLevel.MoreThanOneYearCollege: '1 or more years of college credit, no degree',
-            EducationLevel.AssociatesDegree: 'Associates degree',
-            EducationLevel.BachelorsDegree: 'Bachelors degree',
-            EducationLevel.MastersDegree: 'Masters degree',
+            EducationLevel.AssociateDegree: 'Associate degree',
+            EducationLevel.BachelorsDegree: 'Bachelor\'s degree',
+            EducationLevel.MastersDegree: 'Master\'s degree',
             EducationLevel.ProfessionalDegree: 'Professional degree beyond bachelors degree',
             EducationLevel.DoctorateDegree: 'Doctorate degree'
         }
