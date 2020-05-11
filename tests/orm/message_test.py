@@ -6,7 +6,7 @@ from rethinksmoking.orm.rating import Rating
 class TestMessage:
     def test_post_message(self, session):
         expected_content = 'test content'
-        expected_condition = 'test condition'
+        expected_condition = 'ConstrualLevel'
 
         message = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1)
         message.add()
@@ -20,7 +20,7 @@ class TestMessage:
 
     def test_post_multiple_messages(self, session):
         expected_content = 'test content'
-        expected_condition = 'test condition'
+        expected_condition = 'ConstrualLevel'
 
         message1 = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1)
         message1.add()
@@ -34,7 +34,7 @@ class TestMessage:
 
     def test_post_message_with_scores(self, session):
         expected_content = 'test content'
-        expected_condition = 'test condition'
+        expected_condition = 'DownRegulation'
 
         message = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1)
         message.scores.append(Score(quality=2, scorer_id='JM'))
@@ -47,7 +47,7 @@ class TestMessage:
 
     def test_post_message_with_ratings(self, session):
         expected_content = 'test content'
-        expected_condition = 'test condition'
+        expected_condition = 'DownRegulation'
 
         message = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1)
         message.ratings.append(Rating(helpfulness=2, relatability=1, familiarity=3, rater_id=1))
