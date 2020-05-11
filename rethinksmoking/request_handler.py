@@ -1,7 +1,7 @@
 from typing import Mapping, Union
 
 from .orm.message import Message
-from .orm.mturk_worker import MturkWorker
+from .orm.mturk_worker import MturkWorker, IncomeLevel, EducationLevel
 
 
 class RequestHandler:
@@ -15,7 +15,8 @@ class RequestHandler:
         worker = MturkWorker(age=self._get('age'), gender=self._get('gender'),
                              is_hispanic=self._get('is_hispanic'), ethnicity=self._get('ethnicity'),
                              english_primary_language=self._get('english_primary_language'),
-                             education_level=self._get('education_level'), income=self._get('income'),
+                             education_level=EducationLevel(int(self._get('education_level'))),
+                             income=IncomeLevel(int(self._get('income'))),
                              household_size=self._get('household_size'),
                              ftnd_1=self._get('ftnd_1'), ftnd_2=self._get('ftnd_2'),
                              ftnd_3=self._get('ftnd_3'), ftnd_4=self._get('ftnd_4'),
