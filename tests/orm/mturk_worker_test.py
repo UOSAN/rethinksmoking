@@ -28,7 +28,7 @@ class TestMturkWorker:
                            education_level=EducationLevel.GED, income=IncomeLevel.Between25to40, household_size=9,
                            distracted_level=1, seriousness_level=2, ftnd_1=1, ftnd_2=1, ftnd_3=1, ftnd_4=1, ftnd_5=1,
                            ftnd_6=1)
-        user.messages.append(Message(message_content=expected_content, condition='Unknown'))
+        user.messages.append(Message(message_content=expected_content, condition='SelfAffirmation'))
         user.add()
 
         actual_count = MturkWorker.query.count()

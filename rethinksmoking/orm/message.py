@@ -1,12 +1,13 @@
 import json
 
+from .condition import Condition
 from .database import db
 
 
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     message_content = db.Column(db.String(length=1000), nullable=False)
-    condition = db.Column(db.String(length=1000), nullable=False)
+    condition = db.Column(db.Enum(Condition), nullable=False)
 
     # Foreign key relationship with MturkWorker table
     mturk_user_id = db.Column(db.Integer, db.ForeignKey('mturk_worker.id'), nullable=False)
@@ -30,6 +31,6 @@ class MessageEncoder(json.JSONEncoder):
             return {
                 "id": o.id,
                 "message_content": o.message_content,
-                "condition": o.condition
+                "condition": str(o.condition)
             }
         return json.JSONEncoder.default(self, o)
