@@ -38,7 +38,9 @@ class TestPostWorkerRoute:
         actual_worker = {'age': 10, 'gender': 'Female', 'is_hispanic': '1', 'ethnicity': 'Unknown',
                          'is_english_primary_language': 'No', 'education_level': 6,
                          'income': 1, 'household_size': 9, 'ftnd_1': 1, 'ftnd_2': 1, 'ftnd_3': 1, 'ftnd_4': 1,
-                         'ftnd_5': 1, 'ftnd_6': 1}
+                         'ftnd_5': 1, 'ftnd_6': 1, 'distracted_level': 1, 'seriousness_level': 2,
+                         'reframe_difficulty_level': 3, 'current_smoking_frequency': 4,
+                         'past_smoking_frequency': 3}
 
         # Verify 200 OK is returned when a complete object is received
         with mock.patch('rethinksmoking.orm.mturk_worker.MturkWorker.add') as mock_add:
@@ -52,7 +54,9 @@ class TestPostWorkerRoute:
         actual_worker = {'age': 10, 'gender': 'Female', 'is_hispanic': '2', 'ethnicity': 'Unknown',
                          'is_english_primary_language': 'Yes', 'education_level':7,
                          'income': 2, 'household_size': 10, 'ftnd_1': 1, 'ftnd_2': 1, 'ftnd_3': 1, 'ftnd_4': 1,
-                         'ftnd_5': 1, 'ftnd_6': 1, 'messages': 'reframe 1\treframe 2'}
+                         'ftnd_5': 1, 'ftnd_6': 1, 'distracted_level': 1, 'seriousness_level': 2,
+                         'reframe_difficulty_level': 3, 'current_smoking_frequency': 4,
+                         'past_smoking_frequency': 3, 'messages': 'reframe 1\treframe 2'}
 
         # Verify 200 OK is returned when a complete object is received
         with mock.patch('rethinksmoking.orm.mturk_worker.MturkWorker.add') as mock_add:
