@@ -88,3 +88,21 @@ class SmokingFrequency(Enum):
             SmokingFrequency.Unknown: 'Don\'t know'
         }
         return smoking_frequency_to_string[self]
+
+
+class FivePointScale(Enum):
+    NotAtAll = 1
+    ALittle = 2
+    Somewhat = 3
+    Very = 4
+    Extremely = 5
+
+    def __str__(self):
+        scale_to_string = {
+            FivePointScale.NotAtAll: 'Not at all',
+            FivePointScale.ALittle: 'A little',
+            FivePointScale.Somewhat: 'Somewhat',
+            FivePointScale.Very: 'Very',
+            FivePointScale.Extremely: 'Extremely'
+        }
+        return scale_to_string[self]

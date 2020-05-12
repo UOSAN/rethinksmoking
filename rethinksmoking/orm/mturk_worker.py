@@ -1,7 +1,7 @@
 import json
 
 from .database import db
-from .enums import Gender, EducationLevel, IncomeLevel, SmokingFrequency
+from .enums import Gender, EducationLevel, FivePointScale, IncomeLevel, SmokingFrequency
 
 
 class MturkWorker(db.Model):
@@ -18,9 +18,9 @@ class MturkWorker(db.Model):
     household_size = db.Column(db.Integer)
 
     # Engagement in survey
-    distracted_level = db.Column(db.Integer)
-    seriousness_level = db.Column(db.Integer)
-    reframe_difficulty_level = db.Column(db.Integer)
+    distracted_level = db.Column(db.Enum(FivePointScale))
+    seriousness_level = db.Column(db.Enum(FivePointScale))
+    reframe_difficulty_level = db.Column(db.Enum(FivePointScale))
     past_reframe_use = db.Column(db.Integer)
 
     # Smoking level
@@ -62,6 +62,10 @@ class MturkWorkerEncoder(json.JSONEncoder):
                 "education_level": str(o.education_level),
                 "income": str(o.income),
                 "household_size": o.household_size,
+                "distracted_level": str(o.distracted_level),
+                "seriousness_level": str(o.seriousness_level),
+                "reframe_difficulty_level": str(o.reframe_difficulty_level),
+                "past_reframe_use": o.past_reframe_use,
                 "current_smoking_frequency": str(o.current_smoking_frequency),
                 "past_smoking_frequency": str(o.past_smoking_frequency),
                 "past_daily_smoking": o.past_daily_smoking,
