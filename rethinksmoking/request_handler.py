@@ -1,7 +1,7 @@
 from typing import Mapping, Union
 
 from .orm.message import Message
-from .orm.mturk_worker import MturkWorker, IncomeLevel, EducationLevel
+from .orm.mturk_worker import MturkWorker, IncomeLevel, EducationLevel, FivePointScale, SmokingFrequency
 
 
 class RequestHandler:
@@ -23,9 +23,17 @@ class RequestHandler:
         worker = MturkWorker(age=self._get('age'), gender=self._get('gender'),
                              is_hispanic=self._get_bool('is_hispanic'), ethnicity=self._get('ethnicity'),
                              is_english_primary_language=self._get_bool('is_english_primary_language'),
+                             english_acquisition_age=self._get('english_acquisition_age'),
                              education_level=EducationLevel(int(self._get('education_level'))),
                              income=IncomeLevel(int(self._get('income'))),
                              household_size=self._get('household_size'),
+                             distracted_level=FivePointScale(int(self._get('distracted_level'))),
+                             seriousness_level=FivePointScale(int(self._get('seriousness_level'))),
+                             reframe_difficulty_level=FivePointScale(int(self._get('reframe_difficulty_level'))),
+                             past_reframe_use=self._get('past_reframe_use'),
+                             current_smoking_frequency=SmokingFrequency(int(self._get('current_smoking_frequency'))),
+                             past_smoking_frequency=SmokingFrequency(int(self._get('past_smoking_frequency'))),
+                             past_daily_smoking=self._get('past_daily_smoking'),
                              ftnd_1=self._get('ftnd_1'), ftnd_2=self._get('ftnd_2'),
                              ftnd_3=self._get('ftnd_3'), ftnd_4=self._get('ftnd_4'),
                              ftnd_5=self._get('ftnd_5'), ftnd_6=self._get('ftnd_6'))
