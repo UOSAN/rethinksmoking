@@ -77,6 +77,22 @@ class EducationLevel(Enum):
         return education_to_string[self]
 
 
+class SmokingFrequency(Enum):
+    Daily = 1
+    LessThanDaily = 2
+    NotAtAll = 3
+    Unknown = 4
+
+    def __str__(self):
+        smoking_frequency_to_string = {
+            SmokingFrequency.Daily: 'Daily',
+            SmokingFrequency.LessThanDaily: 'Less than daily',
+            SmokingFrequency.NotAtAll: 'Not at all',
+            SmokingFrequency.Unknown: 'Don\'t know'
+        }
+        return smoking_frequency_to_string[self]
+
+
 class MturkWorker(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     # Demographics
@@ -93,6 +109,11 @@ class MturkWorker(db.Model):
     # Engagement in survey
     distracted_level = db.Column(db.Integer)
     seriousness_level = db.Column(db.Integer)
+
+    # Smoking level
+    current_smoking_frequency = db.Column(db.Enum(SmokingFrequency))
+    past_smoking_frequency = db.Column(db.Enum(SmokingFrequency))
+    past_daily_smoking = db.Column(db.String(15))
 
     # Fagerström Test for Nicotine Dependence
     ftnd_1 = db.Column(db.Integer)  # How soon after you wake up do you smoke your first cigarette?
@@ -128,6 +149,9 @@ class MturkWorkerEncoder(json.JSONEncoder):
                 "education_level": str(o.education_level),
                 "income": str(o.income),
                 "household_size": o.household_size,
+                "current_smoking_frequency": str(o.current_smoking_frequency),
+                "past_smoking_frequency": str(o.past_smoking_frequency),
+                "past_daily_smoking": o.past_daily_smoking,
                 "ftnd_1": o.ftnd_1,
                 "ftnd_2": o.ftnd_2,
                 "ftnd_3": o.ftnd_3,
