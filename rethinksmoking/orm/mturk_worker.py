@@ -109,6 +109,8 @@ class MturkWorker(db.Model):
     # Engagement in survey
     distracted_level = db.Column(db.Integer)
     seriousness_level = db.Column(db.Integer)
+    reframe_difficulty_level = db.Column(db.Integer)
+    past_reframe_use = db.Column(db.Integer)
 
     # Smoking level
     current_smoking_frequency = db.Column(db.Enum(SmokingFrequency))
