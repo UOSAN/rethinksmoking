@@ -11,10 +11,18 @@ class RequestHandler:
     def _get(self, key: str):
         return self._req.get(key)
 
+    def _get_bool(self, key: str):
+        if key == 'is_hispanic':
+            return self._get(key) == 1
+        elif key == 'english_primary_language':
+            return self._get(key) == 'Yes'
+        else:
+            return self._req.get(key)
+
     def handle_request(self):
         worker = MturkWorker(age=self._get('age'), gender=self._get('gender'),
-                             is_hispanic=self._get('is_hispanic'), ethnicity=self._get('ethnicity'),
-                             english_primary_language=self._get('english_primary_language'),
+                             is_hispanic=self._get_bool('is_hispanic'), ethnicity=self._get('ethnicity'),
+                             english_primary_language=self._get_bool('english_primary_language'),
                              education_level=EducationLevel(int(self._get('education_level'))),
                              income=IncomeLevel(int(self._get('income'))),
                              household_size=self._get('household_size'),

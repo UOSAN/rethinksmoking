@@ -22,8 +22,8 @@ class TestPostWorkerRoute:
     def test_bad_request_enum(self, app):
         # Verify 400 Bad Request is returned when a field expects an enum value integer
         # but gets the enum name string instead.
-        actual_worker = {'age': 10, 'gender': 'Female', 'is_hispanic': False, 'ethnicity': 'Unknown',
-                         'english_primary_language': True, 'education_level': 'HighSchoolNoDiploma',
+        actual_worker = {'age': 10, 'gender': 'Female', 'is_hispanic': '1', 'ethnicity': 'Unknown',
+                         'english_primary_language': 'No', 'education_level': 'HighSchoolNoDiploma',
                          'income': 'Below25', 'household_size': 9, 'ftnd_1': 1, 'ftnd_2': 1, 'ftnd_3': 1, 'ftnd_4': 1,
                          'ftnd_5': 1, 'ftnd_6': 1}
 
@@ -35,8 +35,8 @@ class TestPostWorkerRoute:
                 assert response.status_code == HTTPStatus.BAD_REQUEST
 
     def test_success(self, app):
-        actual_worker = {'age': 10, 'gender': 'Female', 'is_hispanic': False, 'ethnicity': 'Unknown',
-                         'english_primary_language': True, 'education_level': 6,
+        actual_worker = {'age': 10, 'gender': 'Female', 'is_hispanic': '1', 'ethnicity': 'Unknown',
+                         'english_primary_language': 'No', 'education_level': 6,
                          'income': 1, 'household_size': 9, 'ftnd_1': 1, 'ftnd_2': 1, 'ftnd_3': 1, 'ftnd_4': 1,
                          'ftnd_5': 1, 'ftnd_6': 1}
 
@@ -49,8 +49,8 @@ class TestPostWorkerRoute:
                 assert mock_add.called
 
     def test_success_with_messages(self, app):
-        actual_worker = {'age': 10, 'gender': 'Female', 'is_hispanic': False, 'ethnicity': 'Unknown',
-                         'english_primary_language': True, 'education_level':7,
+        actual_worker = {'age': 10, 'gender': 'Female', 'is_hispanic': '2', 'ethnicity': 'Unknown',
+                         'english_primary_language': 'Yes', 'education_level':7,
                          'income': 2, 'household_size': 10, 'ftnd_1': 1, 'ftnd_2': 1, 'ftnd_3': 1, 'ftnd_4': 1,
                          'ftnd_5': 1, 'ftnd_6': 1, 'messages': 'reframe 1\treframe 2'}
 
