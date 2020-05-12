@@ -11,7 +11,7 @@ class MturkWorker(db.Model):
     gender = db.Column(db.Enum(Gender))
     is_hispanic = db.Column(db.Boolean)
     ethnicity = db.Column(db.String(300))
-    english_primary_language = db.Column(db.Boolean)
+    is_english_primary_language = db.Column(db.Boolean)
     english_acquisition_age = db.Column(db.Integer)
     education_level = db.Column(db.Enum(EducationLevel))
     income = db.Column(db.Enum(IncomeLevel))
@@ -57,7 +57,7 @@ class MturkWorkerEncoder(json.JSONEncoder):
                 "gender": str(o.gender),
                 "is_hispanic": o.is_hispanic,
                 "ethnicity": o.ethnicity,
-                "english_primary_language": o.english_primary_language,
+                "is_english_primary_language": o.is_english_primary_language,
                 "english_acquisition_age": o.english_acquisition_age,
                 "education_level": str(o.education_level),
                 "income": str(o.income),
