@@ -7,10 +7,10 @@ class TestMturkWorker:
     def test_post_mturk_worker(self, session):
         expected_age = 10
         user = MturkWorker(age=expected_age, gender=Gender.Female, is_hispanic=True, ethnicity='Unknown',
-                           english_primary_language=True, english_acquisition_age=10,
+                           is_english_primary_language=True, english_acquisition_age=10,
                            education_level=EducationLevel.NoSchooling, income=IncomeLevel.Below25, household_size=9,
                            distracted_level=FivePointScale.NotAtAll, seriousness_level=FivePointScale.Extremely,
-                           ftnd_1=1, ftnd_2=1, ftnd_3=1, ftnd_4=1,ftnd_5=1, ftnd_6=1)
+                           ftnd_1=1, ftnd_2=1, ftnd_3=1, ftnd_4=1, ftnd_5=1, ftnd_6=1)
         user.add()
 
         actual_count = MturkWorker.query.count()
@@ -25,10 +25,10 @@ class TestMturkWorker:
         expected_age = 10
         expected_content = 'Test message'
         user = MturkWorker(age=expected_age, gender=Gender.Transgender, is_hispanic=False,
-                           ethnicity='Unknown', english_primary_language=True, english_acquisition_age=10,
+                           ethnicity='Unknown', is_english_primary_language=True, english_acquisition_age=10,
                            education_level=EducationLevel.GED, income=IncomeLevel.Between25to40, household_size=9,
                            distracted_level=FivePointScale.Very, seriousness_level=FivePointScale.ALittle,
-                           ftnd_1=1, ftnd_2=1, ftnd_3=1, ftnd_4=1,ftnd_5=1, ftnd_6=1)
+                           ftnd_1=1, ftnd_2=1, ftnd_3=1, ftnd_4=1, ftnd_5=1, ftnd_6=1)
         user.messages.append(Message(message_content=expected_content, condition='SelfAffirmation'))
         user.add()
 
