@@ -1,6 +1,6 @@
 import json
 
-from .condition import Condition
+from .enums import Condition
 from .database import db
 
 
