@@ -1,10 +1,38 @@
-import json
+from dataclasses import dataclass
+from typing import List
 
 from .database import db
 from .enums import Gender, EducationLevel, FivePointScale, IncomeLevel, SmokingFrequency
+from .message import Message
 
 
+@dataclass
 class MturkWorker(db.Model):
+    id: int
+    age: int
+    gender: Gender
+    is_hispanic: bool
+    ethnicity: str
+    is_english_primary_language: bool
+    english_acquisition_age: int
+    education_level: EducationLevel
+    income: IncomeLevel
+    household_size: int
+    distracted_level: FivePointScale
+    seriousness_level: FivePointScale
+    reframe_difficulty_level: FivePointScale
+    past_reframe_use: int
+    current_smoking_frequency: SmokingFrequency
+    past_smoking_frequency: SmokingFrequency
+    past_daily_smoking: str
+    ftnd_1: int
+    ftnd_2: int
+    ftnd_3: int
+    ftnd_4: int
+    ftnd_5: int
+    ftnd_6: int
+    messages: List[Message]
+
     id = db.Column(db.Integer, primary_key=True)
     # Demographics
     age = db.Column(db.Integer)
@@ -40,40 +68,6 @@ class MturkWorker(db.Model):
 
     rating = db.relationship('Rating', back_populates='rater')
 
-    def __repr__(self):
-        return json.dumps(self, cls=MturkWorkerEncoder)
-
     def add(self):
         db.session.add(self)
         db.session.commit()
-
-
-class MturkWorkerEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, MturkWorker):
-            return {
-                "id": o.id,
-                "age": o.age,
-                "gender": str(o.gender),
-                "is_hispanic": o.is_hispanic,
-                "ethnicity": o.ethnicity,
-                "is_english_primary_language": o.is_english_primary_language,
-                "english_acquisition_age": o.english_acquisition_age,
-                "education_level": str(o.education_level),
-                "income": str(o.income),
-                "household_size": o.household_size,
-                "distracted_level": str(o.distracted_level),
-                "seriousness_level": str(o.seriousness_level),
-                "reframe_difficulty_level": str(o.reframe_difficulty_level),
-                "past_reframe_use": o.past_reframe_use,
-                "current_smoking_frequency": str(o.current_smoking_frequency),
-                "past_smoking_frequency": str(o.past_smoking_frequency),
-                "past_daily_smoking": o.past_daily_smoking,
-                "ftnd_1": o.ftnd_1,
-                "ftnd_2": o.ftnd_2,
-                "ftnd_3": o.ftnd_3,
-                "ftnd_4": o.ftnd_4,
-                "ftnd_5": o.ftnd_5,
-                "ftnd_6": o.ftnd_6
-            }
-        return json.JSONEncoder.default(self, o)
