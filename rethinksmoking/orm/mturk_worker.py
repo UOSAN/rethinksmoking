@@ -21,7 +21,7 @@ class MturkWorker(db.Model):
     distracted_level: FivePointScale
     seriousness_level: FivePointScale
     reframe_difficulty_level: FivePointScale
-    past_reframe_use: int
+    past_reframe_use: str
     current_smoking_frequency: SmokingFrequency
     past_smoking_frequency: SmokingFrequency
     past_daily_smoking: str
@@ -49,7 +49,7 @@ class MturkWorker(db.Model):
     distracted_level = db.Column(db.Enum(FivePointScale))
     seriousness_level = db.Column(db.Enum(FivePointScale))
     reframe_difficulty_level = db.Column(db.Enum(FivePointScale))
-    past_reframe_use = db.Column(db.Integer)
+    past_reframe_use = db.Column(db.String(50))
 
     # Smoking level
     current_smoking_frequency = db.Column(db.Enum(SmokingFrequency))
