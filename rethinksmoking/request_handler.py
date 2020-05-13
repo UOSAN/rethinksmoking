@@ -13,7 +13,7 @@ class RequestHandler:
 
     def _get_bool(self, key: str):
         if key == 'is_hispanic':
-            return self._get(key) == 1
+            return self._get(key) == '1'
         elif key == 'is_english_primary_language':
             return self._get(key) == 'Yes'
         else:
