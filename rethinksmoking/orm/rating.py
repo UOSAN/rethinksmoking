@@ -1,9 +1,15 @@
-import json
+from dataclasses import dataclass
 
 from .database import db
 
 
+@dataclass
 class Rating(db.Model):
+    id: int
+    helpfulness: int
+    relatability: int
+    familiarity: int
+
     id = db.Column(db.Integer, primary_key=True)
     helpfulness = db.Column(db.Integer, nullable=False)
     relatability = db.Column(db.Integer, nullable=False)
@@ -16,21 +22,6 @@ class Rating(db.Model):
     rater_id = db.Column(db.Integer, db.ForeignKey('mturk_worker.id'), nullable=False)
     rater = db.relationship('MturkWorker', back_populates='rating')
 
-    def __repr__(self):
-        return json.dumps(self, cls=RatingEncoder)
-
     def add(self):
         db.session.add(self)
         db.session.commit()
-
-
-class RatingEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, Rating):
-            return {
-                "id": o.id,
-                "helpfulness": o.helpfulness,
-                "condition": o.relatability,
-                "familiarity": o.familiarity
-            }
-        return json.JSONEncoder.default(self, o)

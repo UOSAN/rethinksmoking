@@ -1,13 +1,16 @@
 import sys
+
 from flask import (
     Blueprint, request, current_app, make_response
 )
+from flask.json import dumps
 
-from .request_handler import RequestHandler
-from .orm.rating import Rating
-from .orm.score import Score
+from .custom_encoder import CustomEncoder
 from .orm.message import Message
 from .orm.mturk_worker import MturkWorker
+from .orm.rating import Rating
+from .orm.score import Score
+from .request_handler import RequestHandler
 
 bp = Blueprint('worker', __name__)
 
@@ -21,7 +24,7 @@ def add_worker_and_messages():
         print(f'RS GET /worker')
         sys.stdout.flush()
         workers = MturkWorker.query.all()
-        return make_response((str(workers), 200, headers))
+        return make_response((dumps(workers, cls=CustomEncoder), 200, headers))
     elif request.method == 'POST':
         print(f'RS POST /worker')
         sys.stdout.flush()
@@ -47,16 +50,16 @@ def add_worker_and_messages():
 @bp.route('/message', methods=['GET'])
 def get_messages():
     messages = Message.query.all()
-    return make_response((str(messages), 200, headers))
+    return make_response((dumps(messages, cls=CustomEncoder), 200, headers))
 
 
 @bp.route('/score', methods=['GET'])
 def get_scores():
     scores = Score.query.all()
-    return make_response((str(scores), 200, headers))
+    return make_response((dumps(scores, cls=CustomEncoder), 200, headers))
 
 
 @bp.route('/rating', methods=['GET'])
 def get_ratings():
     ratings = Rating.query.all()
-    return make_response((str(ratings), 200, headers))
+    return make_response((dumps(ratings, cls=CustomEncoder), 200, headers))
