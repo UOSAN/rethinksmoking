@@ -11,6 +11,8 @@ from .orm.mturk_worker import MturkWorker
 
 bp = Blueprint('worker', __name__)
 
+headers = {'Content-Type': 'application/json'}
+
 
 # Handle POST to the /worker endpoint that contains the required output
 @bp.route('/worker', methods=['GET', 'POST'])
@@ -19,7 +21,7 @@ def add_worker_and_messages():
         print(f'RS GET /worker')
         sys.stdout.flush()
         workers = MturkWorker.query.all()
-        return make_response(str(workers), 200)
+        return make_response((str(workers), 200, headers))
     elif request.method == 'POST':
         print(f'RS POST /worker')
         sys.stdout.flush()
@@ -39,22 +41,22 @@ def add_worker_and_messages():
             return make_response('', 400)
 
         # return successfully
-        return make_response('', 200)
+        return make_response(('', 200, headers))
 
 
 @bp.route('/message', methods=['GET'])
 def get_messages():
     messages = Message.query.all()
-    return make_response(str(messages), 200)
+    return make_response((str(messages), 200, headers))
 
 
 @bp.route('/score', methods=['GET'])
 def get_scores():
     scores = Score.query.all()
-    return make_response(str(scores), 200)
+    return make_response((str(scores), 200, headers))
 
 
 @bp.route('/rating', methods=['GET'])
 def get_ratings():
     ratings = Rating.query.all()
-    return make_response(str(ratings), 200)
+    return make_response((str(ratings), 200, headers))
