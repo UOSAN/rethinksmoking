@@ -67,3 +67,43 @@ class TestPostWorkerRoute:
                     assert response.status_code == HTTPStatus.OK
                     assert mock_add.called
                     assert mock_append.called
+
+
+class TestGetWorkerRoute:
+    def test_success_worker(self, app):
+        with mock.patch('sqlalchemy.orm.query.Query.all', return_value=[]) as mock_all:
+            with app.app_context():
+                client = app.test_client()
+                response = client.get('/worker')
+                assert response.status_code == HTTPStatus.OK
+                assert mock_all.called
+
+
+class TestGetMessageRoute:
+    def test_success_message(self, app):
+        with mock.patch('sqlalchemy.orm.query.Query.all', return_value=[]) as mock_all:
+            with app.app_context():
+                client = app.test_client()
+                response = client.get('/message')
+                assert response.status_code == HTTPStatus.OK
+                assert mock_all.called
+
+
+class TestGetScoreRoute:
+    def test_success_score(self, app):
+        with mock.patch('sqlalchemy.orm.query.Query.all', return_value=[]) as mock_all:
+            with app.app_context():
+                client = app.test_client()
+                response = client.get('/score')
+                assert response.status_code == HTTPStatus.OK
+                assert mock_all.called
+
+
+class TestGetRatingRoute:
+    def test_success_rating(self, app):
+        with mock.patch('sqlalchemy.orm.query.Query.all', return_value=[]) as mock_all:
+            with app.app_context():
+                client = app.test_client()
+                response = client.get('/rating')
+                assert response.status_code == HTTPStatus.OK
+                assert mock_all.called
