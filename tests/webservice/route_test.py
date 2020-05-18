@@ -71,7 +71,7 @@ class TestPostWorkerRoute:
 
 class TestGetWorkerRoute:
     def test_success_worker(self, app):
-        with mock.patch('sqlalchemy.orm.query.Query.all') as mock_all:
+        with mock.patch('sqlalchemy.orm.query.Query.all', return_value=[]) as mock_all:
             with app.app_context():
                 client = app.test_client()
                 response = client.get('/worker')
@@ -81,7 +81,7 @@ class TestGetWorkerRoute:
 
 class TestGetMessageRoute:
     def test_success_message(self, app):
-        with mock.patch('sqlalchemy.orm.query.Query.all') as mock_all:
+        with mock.patch('sqlalchemy.orm.query.Query.all', return_value=[]) as mock_all:
             with app.app_context():
                 client = app.test_client()
                 response = client.get('/message')
@@ -91,7 +91,7 @@ class TestGetMessageRoute:
 
 class TestGetScoreRoute:
     def test_success_score(self, app):
-        with mock.patch('sqlalchemy.orm.query.Query.all') as mock_all:
+        with mock.patch('sqlalchemy.orm.query.Query.all', return_value=[]) as mock_all:
             with app.app_context():
                 client = app.test_client()
                 response = client.get('/score')
@@ -101,7 +101,7 @@ class TestGetScoreRoute:
 
 class TestGetRatingRoute:
     def test_success_rating(self, app):
-        with mock.patch('sqlalchemy.orm.query.Query.all') as mock_all:
+        with mock.patch('sqlalchemy.orm.query.Query.all', return_value=[]) as mock_all:
             with app.app_context():
                 client = app.test_client()
                 response = client.get('/rating')
