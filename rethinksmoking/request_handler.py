@@ -9,7 +9,7 @@ class RequestHandler:
         self._req = request
 
     def _get(self, key: str):
-        return self._req.get(key)
+        return self._req[key]
 
     def _get_bool(self, key: str):
         if key == 'is_hispanic':
@@ -17,7 +17,7 @@ class RequestHandler:
         elif key == 'is_english_primary_language':
             return self._get(key) == 'Yes'
         else:
-            return self._req.get(key)
+            return self._req[key]
 
     def handle_request(self):
         worker = MturkWorker(age=self._get('age'), gender=self._get('gender'),
