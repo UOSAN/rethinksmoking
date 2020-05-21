@@ -4,12 +4,12 @@ from unittest import mock
 
 class TestGetWorkerRoute:
     def test_success_worker(self, app):
-        with mock.patch('sqlalchemy.orm.query.Query.all', return_value=[]) as mock_all:
-            with app.app_context():
-                client = app.test_client()
-                response = client.get('/worker')
-                assert response.status_code == HTTPStatus.OK
-                assert mock_all.called
+        with mock.patch('sqlalchemy.orm.query.Query.all', return_value=[]) as mock_all, \
+                app.app_context():
+            client = app.test_client()
+            response = client.get('/worker')
+            assert response.status_code == HTTPStatus.OK
+            assert mock_all.called
 
 
 class TestPostWorkerRoute:
@@ -23,11 +23,11 @@ class TestPostWorkerRoute:
     def test_incomplete_object(self, app):
         bad_worker = {'bad_field': 'val'}
         # Return 400 Bad Request when an incomplete object is sent
-        with mock.patch('rethinksmoking.orm.mturk_worker.MturkWorker.add'):
-            with app.app_context():
-                client = app.test_client()
-                response = client.post('/worker', json=bad_worker, content_type='application/json')
-                assert response.status_code == HTTPStatus.BAD_REQUEST
+        with mock.patch('rethinksmoking.orm.mturk_worker.MturkWorker.add'), \
+                app.app_context():
+            client = app.test_client()
+            response = client.post('/worker', json=bad_worker, content_type='application/json')
+            assert response.status_code == HTTPStatus.BAD_REQUEST
 
     def test_bad_request_enum(self, app):
         # Verify 400 Bad Request is returned when a field expects an enum value integer
@@ -38,11 +38,11 @@ class TestPostWorkerRoute:
                          'ftnd_5': 1, 'ftnd_6': 1}
 
         # Verify 200 OK is returned when a complete object is received
-        with mock.patch('rethinksmoking.orm.mturk_worker.MturkWorker.add'):
-            with app.app_context():
-                client = app.test_client()
-                response = client.post('/worker', json=actual_worker, content_type='application/json')
-                assert response.status_code == HTTPStatus.BAD_REQUEST
+        with mock.patch('rethinksmoking.orm.mturk_worker.MturkWorker.add'), \
+                app.app_context():
+            client = app.test_client()
+            response = client.post('/worker', json=actual_worker, content_type='application/json')
+            assert response.status_code == HTTPStatus.BAD_REQUEST
 
     def test_success(self, app):
         actual_worker = {'age': 10, 'gender': 'Female', 'is_hispanic': '1', 'ethnicity': 'Unknown',
@@ -53,12 +53,12 @@ class TestPostWorkerRoute:
                          'past_smoking_frequency': 3, 'past_daily_smoking': 'Unknown', 'messages': ''}
 
         # Verify 200 OK is returned when a complete object is received
-        with mock.patch('rethinksmoking.orm.mturk_worker.MturkWorker.add') as mock_add:
-            with app.app_context():
-                client = app.test_client()
-                response = client.post('/worker', json=actual_worker, content_type='application/json')
-                assert response.status_code == HTTPStatus.OK
-                assert mock_add.called
+        with mock.patch('rethinksmoking.orm.mturk_worker.MturkWorker.add') as mock_add, \
+                app.app_context():
+            client = app.test_client()
+            response = client.post('/worker', json=actual_worker, content_type='application/json')
+            assert response.status_code == HTTPStatus.OK
+            assert mock_add.called
 
     def test_success_with_messages(self, app):
         actual_worker = {'age': 10, 'gender': 'Female', 'is_hispanic': '2', 'ethnicity': 'Unknown',
@@ -70,11 +70,11 @@ class TestPostWorkerRoute:
                          'messages': 'reframe 1\treframe 2'}
 
         # Verify 200 OK is returned when a complete object is received
-        with mock.patch('rethinksmoking.orm.mturk_worker.MturkWorker.add') as mock_add:
-            with mock.patch('sqlalchemy.orm.collections.InstrumentedList.append') as mock_append:
-                with app.app_context():
-                    client = app.test_client()
-                    response = client.post('/worker', json=actual_worker, content_type='application/json')
-                    assert response.status_code == HTTPStatus.OK
-                    assert mock_add.called
-                    assert mock_append.called
+        with mock.patch('rethinksmoking.orm.mturk_worker.MturkWorker.add') as mock_add, \
+                mock.patch('sqlalchemy.orm.collections.InstrumentedList.append') as mock_append, \
+                app.app_context():
+            client = app.test_client()
+            response = client.post('/worker', json=actual_worker, content_type='application/json')
+            assert response.status_code == HTTPStatus.OK
+            assert mock_add.called
+            assert mock_append.called
