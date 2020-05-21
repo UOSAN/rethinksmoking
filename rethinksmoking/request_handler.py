@@ -2,6 +2,7 @@ from typing import Mapping, Union
 
 from .orm.message import Message
 from .orm.mturk_worker import MturkWorker, IncomeLevel, EducationLevel, FivePointScale, SmokingFrequency
+from .orm.score import Score
 
 
 class RequestHandler:
@@ -45,3 +46,11 @@ class RequestHandler:
                 worker.messages.append(message)
 
         worker.add()
+
+    def post_score(self):
+        message_id = self._get('message_id')
+        message = Message.query.get(message_id)
+
+        score = Score(quality=self._get('quality'), scorer_id=self._get('scorer_id'))
+        message.scores.append(score)
+        score.add()

@@ -59,6 +59,29 @@ def get_scores():
     return make_response((dumps(scores, cls=CustomEncoder), 200, headers))
 
 
+@bp.route('/score', methods=['POST'])
+def post_scores():
+    print(f'RS POST /score')
+    sys.stdout.flush()
+    if request.is_json:
+        request_output = request.get_json()
+        print(f'POST request as JSON:\n{request_output}\n')
+        sys.stdout.flush()
+
+        try:
+            handler = RequestHandler(request=request_output)
+            handler.post_score()
+        except (KeyError, TypeError, ValueError) as err:
+            print(err)
+            return make_response('', 400)
+    else:
+        current_app.logger.info(f'POST request:\n{request.data}\n')
+        return make_response('', 400)
+
+    # return successfully
+    return make_response(('', 200, headers))
+
+
 @bp.route('/rating', methods=['GET'])
 def get_ratings():
     ratings = Rating.query.all()
