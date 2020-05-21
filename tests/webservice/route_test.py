@@ -36,11 +36,11 @@ class TestPostWorkerRoute:
 
     def test_success(self, app):
         actual_worker = {'age': 10, 'gender': 'Female', 'is_hispanic': '1', 'ethnicity': 'Unknown',
-                         'is_english_primary_language': 'No', 'education_level': 6,
+                         'is_english_primary_language': 'No', 'english_acquisition_age': 12, 'education_level': 6,
                          'income': 1, 'household_size': 9, 'ftnd_1': 1, 'ftnd_2': 1, 'ftnd_3': 1, 'ftnd_4': 1,
                          'ftnd_5': 1, 'ftnd_6': 1, 'distracted_level': 1, 'seriousness_level': 2,
-                         'reframe_difficulty_level': 3, 'current_smoking_frequency': 4,
-                         'past_smoking_frequency': 3}
+                         'reframe_difficulty_level': 3, 'past_reframe_use': 'Never', 'current_smoking_frequency': 4,
+                         'past_smoking_frequency': 3, 'past_daily_smoking': 'Unknown', 'messages': ''}
 
         # Verify 200 OK is returned when a complete object is received
         with mock.patch('rethinksmoking.orm.mturk_worker.MturkWorker.add') as mock_add:
@@ -52,11 +52,12 @@ class TestPostWorkerRoute:
 
     def test_success_with_messages(self, app):
         actual_worker = {'age': 10, 'gender': 'Female', 'is_hispanic': '2', 'ethnicity': 'Unknown',
-                         'is_english_primary_language': 'Yes', 'education_level':7,
+                         'is_english_primary_language': 'Yes', 'english_acquisition_age': '', 'education_level':7,
                          'income': 2, 'household_size': 10, 'ftnd_1': 1, 'ftnd_2': 1, 'ftnd_3': 1, 'ftnd_4': 1,
                          'ftnd_5': 1, 'ftnd_6': 1, 'distracted_level': 1, 'seriousness_level': 2,
-                         'reframe_difficulty_level': 3, 'current_smoking_frequency': 4,
-                         'past_smoking_frequency': 3, 'messages': 'reframe 1\treframe 2'}
+                         'reframe_difficulty_level': 3, 'past_reframe_use': 'Never', 'current_smoking_frequency': 4,
+                         'past_smoking_frequency': 3, 'past_daily_smoking': 'Unknown',
+                         'messages': 'reframe 1\treframe 2'}
 
         # Verify 200 OK is returned when a complete object is received
         with mock.patch('rethinksmoking.orm.mturk_worker.MturkWorker.add') as mock_add:
