@@ -1,9 +1,10 @@
 from typing import Mapping, Union
 
+from .orm.enums import IncomeLevel, EducationLevel, FivePointScale, SmokingFrequency
 from .orm.message import Message
-from .orm.mturk_worker import MturkWorker, IncomeLevel, EducationLevel, FivePointScale, SmokingFrequency
-from .orm.score import Score
+from .orm.mturk_worker import MturkWorker
 from .orm.rating import Rating
+from .orm.score import Score
 
 
 class RequestHandler:
