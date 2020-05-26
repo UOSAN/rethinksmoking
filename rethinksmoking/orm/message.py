@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime
 from typing import List
 
 from .enums import Condition
@@ -12,12 +13,14 @@ class Message(db.Model):
     id: int
     message_content: str
     condition: Condition
+    timestamp: datetime
     scores: List[Score]
     ratings: List[Rating]
 
     id = db.Column(db.Integer, primary_key=True)
     message_content = db.Column(db.String(length=1000), nullable=False)
     condition = db.Column(db.Enum(Condition), nullable=False)
+    timestamp = db.Column(db.DateTime, nullable=False)
 
     # Foreign key relationship with MturkWorker table
     mturk_user_id = db.Column(db.Integer, db.ForeignKey('mturk_worker.id'), nullable=False)
