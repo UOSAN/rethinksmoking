@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Mapping, Union
 
 from .orm.enums import IncomeLevel, EducationLevel, FivePointScale, SmokingFrequency
@@ -40,11 +41,12 @@ class RequestHandler:
                              ftnd_1=self._get('ftnd_1'), ftnd_2=self._get('ftnd_2'),
                              ftnd_3=self._get('ftnd_3'), ftnd_4=self._get('ftnd_4'),
                              ftnd_5=self._get('ftnd_5'), ftnd_6=self._get('ftnd_6'))
+        timestamp = datetime.fromisoformat(self._get('timestamp'))
         # messages is a field of tab-separated values. Do not create database entries for empty strings.
         messages = (self._get('messages') or '').split('\t')
         for m in messages:
             if len(m) > 0:
-                message = Message(message_content=m, condition='DownRegulation')
+                message = Message(message_content=m, condition='DownRegulation', timestamp=timestamp)
                 worker.messages.append(message)
 
         worker.add()

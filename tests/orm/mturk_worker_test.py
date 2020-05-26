@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from rethinksmoking.orm.message import Message
 from rethinksmoking.orm.enums import FivePointScale, Gender, IncomeLevel, EducationLevel
 from rethinksmoking.orm.mturk_worker import MturkWorker
@@ -29,7 +31,8 @@ class TestMturkWorker:
                            education_level=EducationLevel.GED, income=IncomeLevel.Between25to40, household_size=9,
                            distracted_level=FivePointScale.Very, seriousness_level=FivePointScale.ALittle,
                            ftnd_1=1, ftnd_2=1, ftnd_3=1, ftnd_4=1, ftnd_5=1, ftnd_6=1)
-        user.messages.append(Message(message_content=expected_content, condition='SelfAffirmation'))
+        user.messages.append(Message(message_content=expected_content, condition='SelfAffirmation',
+                                     timestamp=datetime.now()))
         user.add()
 
         actual_count = MturkWorker.query.count()

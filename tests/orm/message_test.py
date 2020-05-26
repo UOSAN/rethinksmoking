@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from rethinksmoking.orm.message import Message
 from rethinksmoking.orm.score import Score
 from rethinksmoking.orm.rating import Rating
@@ -8,7 +10,7 @@ class TestMessage:
         expected_content = 'test content'
         expected_condition = 'ConstrualLevel'
 
-        message = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1)
+        message = Message(message_content=expected_content, condition=expected_condition, timestamp=datetime.now(), mturk_user_id=1)
         message.add()
 
         # Verify only message in database has correct content
@@ -22,10 +24,10 @@ class TestMessage:
         expected_content = 'test content'
         expected_condition = 'ConstrualLevel'
 
-        message1 = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1)
+        message1 = Message(message_content=expected_content, condition=expected_condition, timestamp=datetime.now(), mturk_user_id=1)
         message1.add()
 
-        message2 = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1)
+        message2 = Message(message_content=expected_content, condition=expected_condition, timestamp=datetime.now(), mturk_user_id=1)
         message2.add()
 
         # Verify correct number of messages
@@ -36,7 +38,7 @@ class TestMessage:
         expected_content = 'test content'
         expected_condition = 'DownRegulation'
 
-        message = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1)
+        message = Message(message_content=expected_content, condition=expected_condition, timestamp=datetime.now(), mturk_user_id=1)
         message.scores.append(Score(quality=2, scorer_id='JM'))
         message.add()
 
@@ -49,7 +51,7 @@ class TestMessage:
         expected_content = 'test content'
         expected_condition = 'DownRegulation'
 
-        message = Message(message_content=expected_content, condition=expected_condition, mturk_user_id=1)
+        message = Message(message_content=expected_content, condition=expected_condition, timestamp=datetime.now(),  mturk_user_id=1)
         message.ratings.append(Rating(helpfulness=2, relatability=1, familiarity=3, rater_id=1))
         message.add()
 
