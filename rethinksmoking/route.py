@@ -35,7 +35,7 @@ def add_worker_and_messages():
 
             try:
                 handler = RequestHandler(request=request_output)
-                handler.handle_request()
+                handler.post_worker()
             except (KeyError, TypeError, ValueError) as err:
                 print(err)
                 return make_response('', 400)

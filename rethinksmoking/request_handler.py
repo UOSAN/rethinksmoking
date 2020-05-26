@@ -23,7 +23,7 @@ class RequestHandler:
         else:
             return self._req[key]
 
-    def handle_request(self):
+    def post_worker(self):
         worker = MturkWorker(age=self._get('age'), gender=self._get('gender'),
                              is_hispanic=self._get_bool('is_hispanic'), ethnicity=self._get('ethnicity'),
                              is_english_primary_language=self._get_bool('is_english_primary_language'),
