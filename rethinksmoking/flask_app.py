@@ -20,6 +20,11 @@ def create_app(test_config=None):
         except KeyError as e:
             print(e)
             db_uri = 'sqlite:///:memory:'
+
+        if os.environ.get('MYSQL_SSL') is not None:
+            ca_path = os.path.join(app.instance_path, 'BaltimoreCyberTrustRoot.crt.pem')
+            db_uri = f'{db_uri}?ssl_ca={ca_path}'
+
         app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     else:
         # load the test config if passed in
